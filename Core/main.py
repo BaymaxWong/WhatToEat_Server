@@ -17,9 +17,9 @@ if __name__=="__main__":
     #树莓派专用
     #serverNO1 = TcpServer("192.168.31.119", 50000)
     #虚拟机专用
-    serverNO1 = network.TcpServer("192.168.31.126", 50000)
+    #serverNO1 = network.TcpServer("192.168.31.126", 50000)
     #阿里云服务器专用
-    #serverNO1 = TcpServer("172.19.35.203", 50000)
+    serverNO1 = network.TcpServer("172.19.35.203", 50000)
     serverNO1.socket_start()
 
     data = {

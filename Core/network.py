@@ -15,7 +15,6 @@ def socket_server_callback_get(socket):
 
     revdata = socket.recv(1024)
     if revdata:
-        #socket.send(revdata)
         senData = http.get_response(revdata)
         socket.send(senData)
 

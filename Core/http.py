@@ -31,7 +31,6 @@ class ResponseBuilder:
 
     # TODO Complete the build function
     def build(self):
-       
         response = self.status
         response += NEWLINE
         for i in self.headers:
@@ -54,6 +53,8 @@ def get_response(data):
     sentData = json.dumps(json_str)
     builder = ResponseBuilder()
     builder.set_status("200", "OK")
+    #builder.add_header("Access-Control-Allow-Methods:", "POST, GET, OPTIONS, PUT, DELETE")
+    builder.add_header("Access-Control-Allow-Origin", "*")
     builder.set_content(sentData)
     return builder.build()
 
