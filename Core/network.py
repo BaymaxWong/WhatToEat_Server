@@ -8,6 +8,7 @@ import time
 import stopThreading
 import json
 import http
+import urllib.parse
 
 #服务器http端口
 def socket_server_callback_get(socket):
@@ -15,8 +16,30 @@ def socket_server_callback_get(socket):
 
     revdata = socket.recv(1024)
     if revdata:
-        senData = http.get_response(revdata)
-        socket.send(senData)
+        #print(revdata)
+        revdata = revdata.decode()
+        #print("\n")
+        #print(revdata)
+        str1 = "GET /?infoToStr="
+        str2 = "HTTP/1.1"
+        startIndex = revdata.find(str1)
+        endIndex = revdata.find(str2)
+        #jsonLen = endIndex - startIndex + len(str1)
+        jsonStr = revdata[startIndex+len(str1):endIndex]
+        #print(jsonStr)
+        jsonStr = urllib.parse.unquote(jsonStr)
+        print(jsonStr)
+        jsondata = json.loads(jsonStr)
+
+        print ("jsondata['userInfo']: ", jsondata['userInfo'])
+        print ("jsondata['psd']: ", jsondata['psd'])
+
+        userInfo = jsondata['userInfo']
+        psd = jsondata['psd']
+
+        if userInfo == "groonal" and psd == 50000 :
+            senData = http.get_response(revdata)
+            socket.send(senData)
 
     socket.close()
     print("线程关闭")

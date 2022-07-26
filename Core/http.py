@@ -2,7 +2,7 @@
 
 import json
 
-NEWLINE = '\n'
+NEWLINE = '\r\n'
 
 class ResponseBuilder:
 
@@ -35,7 +35,7 @@ class ResponseBuilder:
         response += NEWLINE
         for i in self.headers:
             response += i
-        response += NEWLINE
+            response += NEWLINE
         response += NEWLINE
         response = response.encode("utf-8")
         response += self.content
@@ -51,10 +51,12 @@ def get_response(data):
     "foodName" : "Groonal"
     }
     sentData = json.dumps(json_str)
+    sentDataLen = len(sentData)
     builder = ResponseBuilder()
     builder.set_status("200", "OK")
-    #builder.add_header("Access-Control-Allow-Methods:", "POST, GET, OPTIONS, PUT, DELETE")
+    builder.add_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
     builder.add_header("Access-Control-Allow-Origin", "*")
+    builder.add_header("Content-Length", sentDataLen)
     builder.set_content(sentData)
     return builder.build()
 
